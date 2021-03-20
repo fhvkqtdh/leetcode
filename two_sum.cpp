@@ -14,13 +14,13 @@ public:
         for (size_t i = 0; i < size; i++) {
             int num = nums[i];
             auto iter = records.find(target - num);
-            if (iter == records.end()) {
-                records.insert(std::make_pair(num, i));
-            } else {
+            if (iter != records.end()) {
                 result.push_back(iter->second);
                 result.push_back(i);
                 return result;
             }
+
+            records.insert(std::make_pair(num, i));
         }
         return result;
     }
