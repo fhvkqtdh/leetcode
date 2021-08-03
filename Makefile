@@ -23,8 +23,8 @@ CPP_PROGS=$(patsubst %.cpp,%,$(CPP_SOURCES))
 
 .PHONY: all
 all: $(C_PROGS) $(CPP_PROGS)
-	mkdir build
-	mv *.o *.d $^ $(OUTDIR)
+	#-mkdir build
+	#mv *.o *.d $^ $(OUTDIR)
 
 .PHONY: vars
 vars:
@@ -49,15 +49,15 @@ $(CPP_PROGS): % : %.o
 	@echo ' '
 
 $(C_OBJECTS): %.o : %.c %.d
-	@echo 'building file: $<'
+	@echo 'building: $<'
 	$(CC) -c $(CFLAGS) -o $@ $<
-	@echo 'finish building file: $<'
+	@echo 'finish building: $<'
 	@echo ' '
 
 $(CPP_OBJECTS): %.o : %.cpp %.d
-	@echo 'building file: $<'
+	@echo 'building: $<'
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
-	@echo 'finish building file: $<'
+	@echo 'finish building: $<'
 	@echo ' '
 
 $(C_DEPS): %.d : %.c
@@ -77,6 +77,7 @@ $(CPP_DEPS): %.d : %.cpp
 .PHONY: clean
 clean:
 	-$(RM) -r $(OUTDIR)
+	-$(RM) -r *.dSYM
 	-$(RM) $(C_DEPS) $(CPP_DEPS)
 	-$(RM) $(C_OBJECTS) $(CPP_OBJECTS)
 	-$(RM) $(C_PROGS) $(CPP_PROGS)
